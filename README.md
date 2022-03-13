@@ -19,7 +19,7 @@ Its very simple.
 1. clone it or download `TwoD.mjs`
 2. extract/move to desired location
 3. import TwoD module `import { TwoD } from "./location/to/TwoD.mjs"` 
-4. Voila! It should be working (to test this out, try `console.log(TwoD.Math.rand(0, 100))` it should return random number from 0 to 100)
+4. Voila! It should be working (to test this out, open console `F12` and go to console, there you should see colored text)
 
 ## What can it do ? 
 
