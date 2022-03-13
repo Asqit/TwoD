@@ -467,7 +467,7 @@ TwoD.OrientedRect = function (x, y, width, height, angle) {
 };
 
 //--------------------------------------------COLLISION---------------------------------------------//
-TwoD.collision = {};
+TwoD.Collision = {};
 
 /**
  * @description are two circles colliding ? yes = true, no = false
@@ -475,7 +475,7 @@ TwoD.collision = {};
  * @param {TwoD.Circle} circleB
  * @returns {boolean}
  */
-TwoD.collision.circles = function (circleA, circleB) {
+TwoD.Collision.circles = function (circleA, circleB) {
   let radiusSum = circleA.radius + circleB.radius;
   let distance = TwoD.Math.substrVector(circleA.position, circleB.position);
 
