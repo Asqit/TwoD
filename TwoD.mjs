@@ -24,6 +24,27 @@ const is = {
   array: (x) => Array.isArray(x),
 };
 
+let cyberConsole = [
+  "color: cyan",
+  "background-color:black",
+  "padding: 2px 4px",
+  "border-radius: 5px",
+  "border:1px dashed yellow",
+  "padding:5px 10px",
+  "font-family:monospace",
+  "font-weight:bold",
+].join(";");
+
+let d = new Date();
+
+console.log(
+  `%cTwoD.mjs - copyright (c) ${d.getFullYear()} Ondřej Tuček`,
+  cyberConsole
+);
+
+d = null;
+cyberConsole = null;
+
 /** @namespace TwoD */
 const TwoD = new Object();
 
