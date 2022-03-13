@@ -5,12 +5,12 @@ TwoD.js is my tiny javascript library for easing my work with HTML5CanvasElement
 
 ## Contents: 
 
-1. Frame - canvas class
-2. Math - Object with mathematics 
-3. Perf - object for calculating FPS and delta time
-4. Shapes (Vec2, Circle, Rect, Line...)
-5. Collision (measures collision between shapes)
-more to come 
+* Frame - canvas class
+* Math - Object with mathematics 
+* Perf - object for calculating FPS and delta time
+* Shapes (Vec2, Circle, Rect, Line...)
+* Collision (measures collision between shapes)
+**more to come** 
 
 ## how to use
 Its very simple.
