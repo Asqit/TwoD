@@ -13,7 +13,12 @@ TwoD.js is my tiny javascript library for easing my work with HTML5CanvasElement
 more to come 
 
 ## how to use
-Its very simple, just use `import { TwoD } from "./location/to/TwoD.mjs"` and thats it.
+Its very simple.
+
+1. clone it or download `TwoD.mjs`
+2. extract/move to desired location
+3. import TwoD module `import { TwoD } from "./location/to/TwoD.mjs"` 
+4. Voila! It should be working (to test this out, try `console.log(TwoD.Math.rand(0, 100))` it should return random number from 0 to 100)
 
 ## What can it do ? 
 
