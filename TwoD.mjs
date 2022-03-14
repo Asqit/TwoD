@@ -321,8 +321,35 @@ TwoD.Math.divideVector = function (vector, divisor) {
   return res;
 };
 
+/**
+ * @param {TwoD.Vec2} vector
+ * @returns {number}
+ */
 TwoD.Math.vectorLength = function (vector) {
   return Math.sqrt(vector.x * vector.x + vector.y * vector.y);
+};
+
+/**
+ * @param {number} floatA
+ * @param {number} floatB
+ * @returns {boolean}
+ */
+TwoD.Math.areFloatsEqual = function (floatA, floatB) {
+  let threshold = 1.0 / 8192.0;
+  return Math.abs(floatA - floatB) < threshold;
+};
+
+/**
+ * @param {*} vector
+ * @return {TwoD.Vec2}
+ */
+TwoD.Math.unitVector = function (vector) {
+  let len = this.vectorLength(vector);
+  if (0 < len) {
+    return this.divideVector(vector, len);
+  } else {
+    return vector;
+  }
 };
 
 TwoD.Math.NULL_VECTOR = { x: 0, y: 0 };
@@ -501,6 +528,32 @@ TwoD.Collision.circles = function (circleA, circleB) {
   let distance = TwoD.Math.substrVector(circleA.position, circleB.position);
 
   return TwoD.Math.vectorLength(distance) <= radiusSum;
+};
+
+/**
+ *
+ * @param {TwoD.Rect} rectA
+ * @param {TwoD.Rect} rectB
+ * @returns {boolean}
+ */
+TwoD.Collision.rects = function (rectA, rectB) {
+  return (
+    rectA.x < rectB.x + rectB.w &&
+    rectA.x + rectA.w > rectB.x &&
+    rectA.y < rectB.y + rectB.h &&
+    rectA.y + rectA.h > rectB.y
+  );
+};
+
+/**
+ * @param {*} pointA
+ * @param {*} pointB
+ */
+TwoD.Collision.points = function (pointA, pointB) {
+  return (
+    TwoD.Math.areFloatsEqual(pointA.x, pointB.x) &&
+    TwoD.Math.areFloatsEqual(pointA.y, pointB.y)
+  );
 };
 
 Object.freeze(TwoD);
