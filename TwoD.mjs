@@ -117,27 +117,44 @@ TwoD.Frame.prototype.resize = function (width, height) {
 
 /**
  * @returns {CanvasRenderingContext2d} rendering context
+ * @description returns rendering context of the canvas
  */
 TwoD.Frame.prototype.getContext2d = function () {
   return this._canvas.getContext("2d");
 };
 
+/**
+ * @returns {HTMLCanvasElement} canvas
+ */
 TwoD.Frame.prototype.getCanvas = function () {
   return this._canvas;
 };
 
+/**
+ * @returns {number} canvas width
+ */
 TwoD.Frame.prototype.getWidth = function () {
   return this._w;
 };
 
+/**
+ * @returns {number} canvas height
+ */
 TwoD.Frame.prototype.getHeight = function () {
   return this._h;
 };
 
+/**
+ * @returns {string} backgroundColor
+ */
 TwoD.Frame.prototype.getBackgroundColor = function () {
   return this._bg;
 };
 
+/**
+ * @description returns id of the canvas. The id is epoch time when it was created
+ * @returns {number} id
+ */
 TwoD.Frame.prototype.getId = function () {
   return this._id;
 };
@@ -216,6 +233,9 @@ TwoD.Math.randElement = function (array) {
   }
 };
 
+/**
+ * @returns {bool} random boolean
+ */
 TwoD.Math.randBool = function () {
   return this.randElement([true, false]);
 };
@@ -224,7 +244,7 @@ TwoD.Math.randBool = function () {
  * @param {number} n
  * @param {number} min
  * @param {number} max
- * @returns {boolean}
+ * @returns {boolean} is number between limits ? true : false
  */
 TwoD.Math.isBetween = function (n, min, max) {
   if (is.number(n) && is.number(min) && is.number(max))
@@ -259,7 +279,7 @@ TwoD.Math.limit = function (n, min, max) {
 /**
  * @param {TwoD.Vec2} vectorA
  * @param {TwoD.Vec2} vectorB
- * @returns {TwoD.Vec2}
+ * @returns {TwoD.Vec2} sums two vectors
  */
 TwoD.Math.addVector = function (vectorA, vectorB) {
   let res = new TwoD.Vec2(0, 0);
@@ -273,7 +293,7 @@ TwoD.Math.addVector = function (vectorA, vectorB) {
 /**
  * @param {TwoD.Vec2} vectorA
  * @param {TwoD.Vec2} vectorB
- * @returns {TwoD.Vec2}
+ * @returns {TwoD.Vec2} substracts two vectors
  */
 TwoD.Math.substrVector = function (vectorA, vectorB) {
   let res = new TwoD.Vec2(0, 0);
@@ -374,6 +394,10 @@ function _TMPS() {
     : new Date().getTime();
 }
 
+/**
+ * @private
+ * @description holds details for calculating delta time and fps
+ */
 TwoD.Perf._dat = {
   curr: 0,
   last: _TMPS(),
@@ -383,18 +407,23 @@ TwoD.Perf._dat = {
 TwoD.Perf.fps = 0;
 TwoD.Perf.dt = 0;
 
+/**
+ * @description calculates delta time and fps. It **has to be** placed before any updates/renders
+ */
 TwoD.Perf.before = function () {
   this._dat.curr = _TMPS();
   this.dt = Math.min(1, (this._dat.curr - this._dat.last) / 1e3);
   this.fps = 1 / this.dt;
 };
 
+/**
+ * @description saves current delta time state. It has to be placed after all updates/renders.
+ */
 TwoD.Perf.after = function () {
   this._dat.last = this._dat.curr;
 };
 
 /**
- *
  * @param {CanvasRenderingContext2d} ctx
  * @param {number=} x
  * @param {number=} y
@@ -448,8 +477,8 @@ TwoD.Rect = function (x, y, width, height) {
   if (is.number(x) && is.number(y) && is.number(width) && is.number(height)) {
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.height = height;
+    this.w = width;
+    this.h = height;
   } else {
     this.x = 0;
     this.y = 0;
