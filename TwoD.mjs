@@ -45,16 +45,19 @@ console.log(
 d = null;
 cyberConsole = null;
 
-/** @namespace TwoD */
-const TwoD = new Object();
+/**
+ * @namespace TwoD
+ * @singleton
+ */
+const TwoD = {};
 
 //--------------------------------------------------CANVAS-----------------------------------------------//
 
 /**
  * @constructor
- * @param {number?} width
- * @param {number?} height
- * @param {string?} backgroundColor
+ * @param {number=} width
+ * @param {number=} height
+ * @param {string=} backgroundColor
  */
 TwoD.Frame = function (width, height, backgroundColor) {
   if (is.number(width) && is.number(height) && is.string(backgroundColor)) {
@@ -82,7 +85,7 @@ TwoD.Frame = function (width, height, backgroundColor) {
 };
 
 /**
- * @param {HTMLElement?} destination
+ * @param {HTMLElement=} destination
  * @returns {boolean} TRUE on success and FALSE on failure
  * @description inserts a new canvas into HTML, destination is the place where the canvas should be located if specified
  */
@@ -163,6 +166,9 @@ TwoD.Frame.prototype.setHeight = function (height) {
   }
 };
 
+/**
+ * @param {string} backgroundColor
+ */
 TwoD.Frame.prototype.setBackgroundColor = function (backgroundColor) {
   if (is.string(backgroundColor)) {
     this._bg = backgroundColor;
@@ -390,10 +396,10 @@ TwoD.Perf.after = function () {
 /**
  *
  * @param {CanvasRenderingContext2d} ctx
- * @param {number?} x
- * @param {number?} y
+ * @param {number=} x
+ * @param {number=} y
  */
-TwoD.Perf.drawFPS = function (ctx, x, y) {
+TwoD.Perf.drawFPS = function (ctx, x = 30, y = 30) {
   if (is.object(ctx) && is.number(x) && is.number(y)) {
     ctx.font = "15px monospace";
     ctx.fillStyle = "#0F0";
@@ -405,8 +411,8 @@ TwoD.Perf.drawFPS = function (ctx, x, y) {
 //--------------------------------------------SHAPES---------------------------------------------//
 /**
  * @constructor
- * @param {number?} x
- * @param {number?} y
+ * @param {number=} x
+ * @param {number=} y
  */
 TwoD.Vec2 = function (x, y) {
   if (is.number(x) && is.number(y)) {
