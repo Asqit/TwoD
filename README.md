@@ -7,7 +7,7 @@ TwoD.js is my tiny javascript library for easing my work with `HTML5CanvasElemen
 ## Contents:
 
 namespace is `TwoD`. So when you need to use some part of the lib, you simply call it by `TwoD` + dot notation.
-`TwoD` is just an object literal, but it has been frezen.
+`TwoD` is just an object literal, but it has been frezed by `Object.freeze(TwoD)`, so its not editable.
 
 - `Frame` - canvas class
 - `Math` - Object with mathematics
