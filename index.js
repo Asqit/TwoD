@@ -1,6 +1,4 @@
 "use strict";
-import { TwoD } from "./TwoD.mjs";
-
 const app = new TwoD.Frame(); // creating a new canvas
 const ctx = app.getContext2d();
 const bouncer = new TwoD.Rect(innerWidth / 2, innerHeight / 2, 50, 50); // creating a new rectangle
