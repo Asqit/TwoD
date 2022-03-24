@@ -1,9 +1,12 @@
 "use strict";
+// This is just sample, not any benchmark
+// It renders a black frame with rectangle which is moving in random direction
+
 const app = new TwoD.Frame(); // creating a new canvas
 const ctx = app.getContext2d();
 const bouncer = new TwoD.Rect(innerWidth / 2, innerHeight / 2, 50, 50); // creating a new rectangle
-//---------------SHAPE PROTOTYPES----------------//
 
+//---------------SHAPE PROTOTYPES----------------//
 TwoD.Rect.prototype.direction = {
   x: TwoD.Math.rand(-150, 150),
   y: TwoD.Math.rand(-150, 150),
@@ -50,7 +53,6 @@ TwoD.Rect.prototype.update = function () {
 };
 
 //---------------CORE----------------//
-
 function update() {
   bouncer.update();
 }
