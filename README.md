@@ -21,14 +21,14 @@ namespace is `TwoD`. So when you need to use some part of the lib, you simply ca
 
 Its very simple.
 
-**ES6++**
+**ES6 module**
 
 1. clone it or download `TwoD.mjs`
 2. extract/move to desired location
 3. import TwoD object `import { TwoD } from "./location/to/TwoD.mjs"`
 4. Voila! It should be working (to test this out, open console `F12` and go to console, there you should see colored text)
 
-**ES5 (babel)**
+**ES5 script (babel)**
 
 1. clone or download `TwoD.js`
 2. extract/move to desired location
