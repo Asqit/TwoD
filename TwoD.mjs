@@ -24,7 +24,7 @@ const is = {
   array: (x) => Array.isArray(x),
 };
 
-let cyberConsole = [
+let logStyle = [
   "color: cyan",
   "background-color:black",
   "padding: 2px 4px",
@@ -39,17 +39,15 @@ let d = new Date();
 
 console.log(
   `%cTwoD.mjs - copyright (c) ${d.getFullYear()} Ondřej Tuček`,
-  cyberConsole
+  logStyle
 );
 
-d = null;
-cyberConsole = null;
 
 /**
  * @namespace TwoD
  * @singleton
  */
-const TwoD = {};
+const TwoD = TwoD || {};
 
 //--------------------------------------------------CANVAS-----------------------------------------------//
 
