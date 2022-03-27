@@ -11,9 +11,11 @@ namespace is `TwoD`. So when you need to use some part of the lib, you simply ca
 
 - `Frame` - canvas class
 - `Math` - Object with mathematics
-- `Perf` - object for calculating FPS and delta time
+- `Perf` - Object for calculating FPS and delta time
 - `Shapes` (Vec2, Circle, Rect, Line...)
 - `Collision` (measures collision between shapes)
+- `StateMachine` - Object with State, List and Machine (basic state handling)
+- `Color` - simple function which contructs new RGBA color in String 
 
 **more to come**
 
