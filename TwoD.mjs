@@ -657,7 +657,7 @@ TwoD.StateMachine.Machine = function () {
   };
 };
 
-//---------------------------------------------Colors--------------------------------------------//
+//---------------------------------------------Color--------------------------------------------//
 /**
  * @param {number} red
  * @param {number} green
@@ -681,7 +681,25 @@ TwoD.Color = function (red, green, blue, alpha) {
     a = 255;
     console.warn("passed parameters for Color creation are in invalid type");
   }
+
   return `rgb(${r}, ${g}, ${b}, ${a})`;
+};
+//---------------------------------------------Keyboard--------------------------------------------//
+TwoD.Keyboard = function () {
+  this.keys = {};
+
+  // inserting useable keys from ASCII
+  for (let i = 32; i <= 127; i++) {
+    this.keys[i.toString()] = false;
+  }
+
+  this.onKeyDown = function (e) {
+    this.keys[e.key.toString()] = true;
+  };
+
+  this.onKeyUp = function (e) {
+    this.keys[e.key.toString()] = false;
+  };
 };
 
 Object.freeze(TwoD);
