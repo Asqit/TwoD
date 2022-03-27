@@ -657,5 +657,32 @@ TwoD.StateMachine.Machine = function () {
   };
 };
 
+//---------------------------------------------Colors--------------------------------------------//
+/**
+ * @param {number} red
+ * @param {number} green
+ * @param {number} blue
+ * @returns {string} returns RGBA color
+ */
+TwoD.Color = function (red, green, blue, alpha) {
+  let r, g, b, a;
+  if (
+    is.number(red) &&
+    is.number(green) &&
+    is.number(blue) &&
+    is.number(alpha)
+  ) {
+    r = this.Math.limit(red, 0, 255);
+    g = this.Math.limit(green, 0, 255);
+    b = this.Math.limit(blue, 0, 255);
+    a = this.Math.limit(alpha, 0, 255);
+  } else {
+    r = g = b = 0;
+    a = 255;
+    console.warn("passed parameters for Color creation are in invalid type");
+  }
+  return `rgb(${r}, ${g}, ${b}, ${a})`;
+};
+
 Object.freeze(TwoD);
 export { TwoD };
