@@ -42,7 +42,6 @@ console.log(
   logStyle
 );
 
-
 /**
  * @namespace TwoD
  * @singleton
@@ -587,6 +586,75 @@ TwoD.Collision.points = function (pointA, pointB) {
     TwoD.Math.areFloatsEqual(pointA.x, pointB.x) &&
     TwoD.Math.areFloatsEqual(pointA.y, pointB.y)
   );
+};
+
+//---------------------------------------------StateMachine--------------------------------------------//
+TwoD.StateMachine = {};
+
+/**
+ * @param {any} props - props can be anything. Can be reused latter in the code
+ */
+TwoD.StateMachine.State = function (props) {
+  this.props = props;
+  this.onEnter = function () {};
+  this.update = function () {};
+  this.render = function () {};
+  this.onExit = function () {};
+  this.onPause = function () {};
+  this.onResume = function () {};
+};
+
+TwoD.StateMachine.List = function () {
+  states = [];
+  this.pop = function () {
+    return states.pop();
+  };
+  /**
+   * @param {TwoD.StateMachine.State} state
+   */
+  this.push = function (state) {
+    states.push(state);
+  };
+  this.top = function () {
+    return states[states.length - 1];
+  };
+};
+
+TwoD.StateMachine.Machine = function () {
+  let sl = new TwoD.StateMachine.List();
+
+  this.update = function () {
+    let top = sl.top();
+    top.update();
+  };
+
+  this.render = function () {
+    let top = sl.top();
+    top.render();
+  };
+
+  /**
+   * @param {TwoD.StateMachine.State} state
+   */
+  this.push = function (state) {
+    sl.push(state);
+    state.onEnter();
+  };
+
+  this.pop = function () {
+    sl.top().onExit();
+    sl.pop();
+  };
+
+  this.resume = function () {
+    let top = sl.top();
+    top.onResume();
+  };
+
+  this.pause = function () {
+    let top = sl.top();
+    top.onPause();
+  };
 };
 
 Object.freeze(TwoD);
