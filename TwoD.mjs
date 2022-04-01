@@ -55,6 +55,7 @@ const TwoD = TwoD || {};
  * @param {number=} width
  * @param {number=} height
  * @param {string=} backgroundColor
+ * @description Creates new instance of Frame.
  */
 TwoD.Frame = function (width, height, backgroundColor) {
   if (is.number(width) && is.number(height) && is.string(backgroundColor)) {
@@ -84,7 +85,7 @@ TwoD.Frame = function (width, height, backgroundColor) {
 /**
  * @param {HTMLElement=} destination
  * @returns {boolean} TRUE on success and FALSE on failure
- * @description inserts a new canvas into HTML, destination is the place where the canvas should be located if specified
+ * @description inserts a new Frame(canvas) into HTML. Destination is the place where the canvas should be located if specified else it will rendered in body
  */
 TwoD.Frame.prototype.create = function (destination) {
   if (destination) {
@@ -99,7 +100,7 @@ TwoD.Frame.prototype.create = function (destination) {
 /**
  * @param {number} width
  * @param {number} height
- * @description resizes the canvas to desired parameters. Can be used when resizing document
+ * @description resizes the canvas to desired parameters. Can be used when resizing document: `window.addEventListener("resize", e => frame.resize(innerWidth, innerHeight));`
  */
 TwoD.Frame.prototype.resize = function (width, height) {
   if (is.number(width) && is.number(height)) {
@@ -122,6 +123,7 @@ TwoD.Frame.prototype.getContext2d = function () {
 
 /**
  * @returns {HTMLCanvasElement} canvas
+ * @description returns HTMLCanvasElement of your instance
  */
 TwoD.Frame.prototype.getCanvas = function () {
   return this._canvas;
@@ -149,7 +151,7 @@ TwoD.Frame.prototype.getBackgroundColor = function () {
 };
 
 /**
- * @description returns id of the canvas. The id is epoch time when it was created
+ * @description returns id of the canvas. The id is `epoch` time when it was created
  * @returns {number} id
  */
 TwoD.Frame.prototype.getId = function () {
@@ -221,6 +223,7 @@ TwoD.Math.randInt = function (min, max) {
 
 /**
  * @param {any[]} array
+ * @description returns random element inside of array.
  */
 TwoD.Math.randElement = function (array) {
   if (is.array(array)) {
@@ -266,6 +269,7 @@ TwoD.Math.degToRad = function (deg) {
  * @param {number} min
  * @param {number} max
  * @returns {number}
+ * @description limits your value to be between specified `min`,`max`
  */
 TwoD.Math.limit = function (n, min, max) {
   if (is.number(n) && is.number(min) && is.number(max))
@@ -276,7 +280,7 @@ TwoD.Math.limit = function (n, min, max) {
 /**
  * @param {TwoD.Vec2} vectorA
  * @param {TwoD.Vec2} vectorB
- * @returns {TwoD.Vec2} sums two vectors
+ * @returns {TwoD.Vec2} sums up two vectors
  */
 TwoD.Math.addVector = function (vectorA, vectorB) {
   let res = new TwoD.Vec2(0, 0);
@@ -424,6 +428,7 @@ TwoD.Perf.after = function () {
  * @param {CanvasRenderingContext2d} ctx
  * @param {number=} x
  * @param {number=} y
+ * @throws new Error when invalid ctx was passed, thus stopping game loop
  */
 TwoD.Perf.drawFPS = function (ctx, x = 30, y = 30) {
   if (is.object(ctx) && is.number(x) && is.number(y)) {
@@ -432,6 +437,7 @@ TwoD.Perf.drawFPS = function (ctx, x = 30, y = 30) {
     ctx.fillText(this.fps.toString(), x, y);
   } else {
     console.error("ERROR:Could not render FPS due to invalid type");
+    throw new Error("Invalid type. Stopping now!");
   }
 };
 //--------------------------------------------SHAPES---------------------------------------------//
@@ -439,6 +445,7 @@ TwoD.Perf.drawFPS = function (ctx, x = 30, y = 30) {
  * @constructor
  * @param {number=} x
  * @param {number=} y
+ * @description Creates new instance of Vec2
  */
 TwoD.Vec2 = function (x, y) {
   if (is.number(x) && is.number(y)) {
@@ -457,7 +464,7 @@ TwoD.Vec2 = function (x, y) {
  * @param {TwoD.Vec2} vector
  * @returns {number} distance to different vector
  */
-TwoD.Vec2.prototype.distanceTo = function (vector) {
+TwoD.Vec2.prototype.distanceToVector = function (vector) {
   let x = this.x - vector.x;
   let y = this.y - vector.y;
   return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
@@ -658,48 +665,33 @@ TwoD.StateMachine.Machine = function () {
 };
 
 //---------------------------------------------Color--------------------------------------------//
+
 /**
  * @param {number} red
  * @param {number} green
  * @param {number} blue
- * @returns {string} returns RGBA color
+ * @param {number} alpha
+ * @returns {string} rgba color
  */
 TwoD.Color = function (red, green, blue, alpha) {
-  let r, g, b, a;
+  (this.r = 0), (this.g = 0), (this.b = 0), (this.a = 255);
   if (
     is.number(red) &&
     is.number(green) &&
     is.number(blue) &&
     is.number(alpha)
   ) {
-    r = this.Math.limit(red, 0, 255);
-    g = this.Math.limit(green, 0, 255);
-    b = this.Math.limit(blue, 0, 255);
-    a = this.Math.limit(alpha, 0, 255);
-  } else {
-    r = g = b = 0;
-    a = 255;
-    console.warn("passed parameters for Color creation are in invalid type");
+    this.r = red;
+    this.g = green;
+    this.b = blue;
+    this.a = alpha;
   }
 
-  return `rgb(${r}, ${g}, ${b}, ${a})`;
-};
-//---------------------------------------------Keyboard--------------------------------------------//
-TwoD.Keyboard = function () {
-  this.keys = {};
-
-  // inserting useable keys from ASCII
-  for (let i = 32; i <= 127; i++) {
-    this.keys[i.toString()] = false;
-  }
-
-  this.onKeyDown = function (e) {
-    this.keys[e.key.toString()] = true;
+  this.getColor = function () {
+    return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
   };
 
-  this.onKeyUp = function (e) {
-    this.keys[e.key.toString()] = false;
-  };
+  return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
 };
 
 Object.freeze(TwoD);
