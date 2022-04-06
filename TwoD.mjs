@@ -46,7 +46,7 @@ console.log(
  * @namespace TwoD
  * @singleton
  */
-const TwoD = TwoD || {};
+const TwoD = {};
 
 //--------------------------------------------------CANVAS-----------------------------------------------//
 
@@ -385,10 +385,6 @@ Object.freeze(TwoD.Math.NULL_VECTOR);
 //------------------------------------------------PERFORMANCE---------------------------------------------//
 TwoD.Perf = {};
 
-/**
- * @private
- * @returns {number}
- */
 function _TMPS() {
   return window.performance && window.performance.now
     ? window.performance.now()
@@ -692,6 +688,63 @@ TwoD.Color = function (red, green, blue, alpha) {
   };
 
   return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
+};
+
+//---------------------------------------------DOM--------------------------------------------//
+TwoD.DOM = {};
+
+/**
+ * @param {string} id
+ * @returns {HTMLElement | boolean} success ? HTMLElement : false;
+ */
+TwoD.DOM.getByID = (id) => {
+  if (!is.string(id)) {
+    console.warn("WARNING:Could not recive HTMLElement. Invalid type");
+    return;
+  }
+  return document.getElementById(id) ?? false;
+};
+
+/**
+ * @param {string} className
+ * @returns {HTMLElement | false} success ? HTMLElement : false;
+ */
+TwoD.DOM.getByClass = (className) => {
+  if (!is.string(className)) {
+    console.warn("WARNING:Could not recive HTMLElement. Invalid type");
+    return;
+  }
+  return document.querySelector(`.${className}`) ?? false;
+};
+
+/**
+ * @param {HTMLElement} element
+ * @returns {void} removes element from body by deleting display property
+ */
+TwoD.DOM.hide = (element) => {
+  if (!is.object(element)) {
+    console.warn("WARNING:Could not hide HTMLElement. Invalid type");
+    return;
+  }
+};
+
+/**
+ * @param {HTMLElement} element
+ * @param {string=} displayType
+ * @returns {void} reveals element in body by setting display property
+ */
+TwoD.DOM.show = (element, displayType) => {
+  switch (true) {
+    case !element:
+    case !is.object(element):
+    case !displayType:
+    case !is.string(displayType):
+      console.warn("WARNING:Could not show HTMLElement.");
+      break;
+    default:
+      element.style.display = displayType;
+      break;
+  }
 };
 
 Object.freeze(TwoD);
