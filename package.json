@@ -1,0 +1,25 @@
+{
+  "name": "two-d",
+  "version": "1.0.0",
+  "description": "_tiny javascript library_",
+  "main": "TwoD.mjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Asqit/TwoD.git"
+  },
+  "author": {
+    "name": "Ondřej(Andrew) Tuček",
+    "email": "ondrejtucek9@gmail.com",
+    "url": "https://ondrejtucek.netlify.app/"
+  },
+  "keywords": [
+    "Graphics",
+    "JavaScript",
+    "Canvas"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Asqit/TwoD/issues"
+  },
+  "homepage": "https://github.com/Asqit/TwoD#readme"
+}
