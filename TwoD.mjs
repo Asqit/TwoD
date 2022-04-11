@@ -54,18 +54,23 @@ const TwoD = {};
  * @constructor
  * @param {number=} width
  * @param {number=} height
- * @param {string=} backgroundColor
+ * @param {string | TwoD.Color=} backgroundColor
  * @description Creates new instance of Frame.
  */
 TwoD.Frame = function (width, height, backgroundColor) {
-  if (is.number(width) && is.number(height) && is.string(backgroundColor)) {
-    this._w = width;
-    this._h = height;
-    this._bg = backgroundColor;
-  } else {
-    this._w = innerWidth;
-    this._h = innerHeight;
-    this._bg = "#000";
+  switch (true) {
+    case is.number(width):
+      this._w = width;
+    case is.number(height):
+      this._h = height;
+    case is.string(backgroundColor) || is.object(backgroundColor):
+      this._bg = backgroundColor;
+      break;
+    default:
+      this._w = innerWidth;
+      this._h = innerHeight;
+      this._bg = "#000";
+      break;
   }
 
   this._id = Date.now();
@@ -90,11 +95,23 @@ TwoD.Frame = function (width, height, backgroundColor) {
 TwoD.Frame.prototype.create = function (destination) {
   if (destination) {
     destination.appendChild(this._canvas);
+    this._destination = destination;
   } else {
     document.body.appendChild(this._canvas);
   }
 
   return document.getElementById(String(this._id)) ? true : false;
+};
+
+/**
+ * @description removes specific Frame(canvas) instance from previously set destination
+ */
+TwoD.Frame.prototype.remove = function () {
+  if (this._destination) {
+    this._destination.removeChild(this._canvas);
+  } else {
+    document.body.removeChild(this._canvas);
+  }
 };
 
 /**
@@ -208,7 +225,17 @@ TwoD.Math.rand = function (min, max) {
   if (is.number(min) && is.number(max)) {
     return min + Math.random() * (max - min);
   } else {
-    console.error(`ERROR:Invalid type passed while creating random number`);
+    min = +min || 0;
+    max = +max || 255;
+    console.warn(
+      "WARNING:Invalid type passed for random number generator\nTrying to parse numbers or default numbers(0-255) will be used." +
+        "parsedMin:" +
+        min +
+        " " +
+        "parsedMax:" +
+        max
+    );
+    return min + Math.random() * (max - min);
   }
 };
 
@@ -367,7 +394,7 @@ TwoD.Math.areFloatsEqual = function (floatA, floatB) {
 };
 
 /**
- * @param {*} vector
+ * @param {object | TwoD.Vec2} vector
  * @return {TwoD.Vec2}
  */
 TwoD.Math.unitVector = function (vector) {
@@ -444,15 +471,17 @@ TwoD.Perf.drawFPS = function (ctx, x = 30, y = 30) {
  * @description Creates new instance of Vec2
  */
 TwoD.Vec2 = function (x, y) {
-  if (is.number(x) && is.number(y)) {
-    this.x = x;
-    this.y = y;
-  } else {
-    this.x = 0;
-    this.y = 0;
-    console.warn(
-      "WARNING:Either invalid type or no values where passed while creating a new Vec2"
-    );
+  switch (true) {
+    case is.number(x):
+      this.x = x;
+    case is.number(y):
+      this.y = y;
+      break;
+    default:
+      this.x = 0;
+      this.y = 0;
+      console.warn("WARNING:Creating new vector with x:0, y:0");
+      break;
   }
 };
 
@@ -474,19 +503,23 @@ TwoD.Vec2.prototype.distanceToVector = function (vector) {
  * @param {number} height
  */
 TwoD.Rect = function (x, y, width, height) {
-  if (is.number(x) && is.number(y) && is.number(width) && is.number(height)) {
-    this.x = x;
-    this.y = y;
-    this.w = width;
-    this.h = height;
-  } else {
-    this.x = 0;
-    this.y = 0;
-    this.w = 100;
-    this.h = 100;
-    console.warn(
-      "WARNING:Either invalid type or no values where passed while creating a new Rect"
-    );
+  switch (true) {
+    case is.number(x):
+      this.x = x;
+    case is.number(y):
+      this.y = y;
+    case is.number(width):
+      this.w = width;
+    case is.number(height):
+      this.h = height;
+      break;
+    default:
+      this.x = 0;
+      this.y = 0;
+      this.w = 100;
+      this.h = 100;
+      console.warn("WARNING:Creating a new rectangle with default params");
+      break;
   }
 };
 
@@ -542,11 +575,29 @@ TwoD.Circle = function (position, radius) {
  * @param {number} angle
  */
 TwoD.OrientedRect = function (x, y, width, height, angle) {
-  this.x = x || 0;
-  this.y = y || 0;
-  this.width = width || 100;
-  this.height = height || 100;
-  this.angle = angle || 45;
+  switch (true) {
+    case is.number(x):
+      this.x = x;
+    case is.number(y):
+      this.y = y;
+    case is.number(width):
+      this.w = width;
+    case is.number(height):
+      this.h = height;
+    case is.number(angle):
+      this.angle = angle;
+      break;
+    default:
+      this.x = 0;
+      this.y = 0;
+      this.w = 100;
+      this.h = 100;
+      this.angle = 45;
+      console.warn(
+        "WARNING:Creating a new oriented rectangle with default params"
+      );
+      break;
+  }
 };
 
 //--------------------------------------------COLLISION---------------------------------------------//
@@ -591,6 +642,17 @@ TwoD.Collision.points = function (pointA, pointB) {
   );
 };
 
+/**
+ * @param {object | TwoD.Vec2} vec2a
+ * @param {object | TwoD.Vec2} vec2b
+ * @returns {boolean}
+ */
+TwoD.Collision.vectors = function (vec2a, vec2b) {
+  let xs = vec2a.x === vec2b.x;
+  let ys = vec2a.y === vec2b.y;
+  return xs && xy;
+};
+
 //---------------------------------------------StateMachine--------------------------------------------//
 TwoD.StateMachine = {};
 
@@ -608,7 +670,7 @@ TwoD.StateMachine.State = function (props) {
 };
 
 TwoD.StateMachine.List = function () {
-  states = [];
+  let states = [];
   this.pop = function () {
     return states.pop();
   };
@@ -688,6 +750,17 @@ TwoD.Color = function (red, green, blue, alpha) {
   };
 
   return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
+};
+
+/**
+ * @static
+ * @returns {string | TwoD.Color} random color
+ */
+TwoD.Color.random = function () {
+  let r = TwoD.Math.randInt(0, 255);
+  let g = TwoD.Math.randInt(0, 255);
+  let b = TwoD.Math.randInt(0, 255);
+  return `rgb(${r},${g},${b}, 255)`;
 };
 
 //---------------------------------------------DOM--------------------------------------------//

@@ -1,6 +1,6 @@
 {
   "name": "two-d",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "_tiny javascript library_",
   "main": "TwoD.mjs",
   "repository": {
