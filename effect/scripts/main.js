@@ -1,5 +1,5 @@
 "use strict";
-import { TwoD } from "./modules/TwoD.mjs";
+import { TwoD } from "../../TwoD.mjs";
 
 const frame = new TwoD.Frame();
 const ctx = frame.getContext2d();
@@ -22,6 +22,9 @@ TwoD.Rect.prototype.update = function () {
   this.x += this.w * TwoD.Perf.dt;
   this.y += this.h * TwoD.Perf.dt;
 };
+
+console.log(TwoD.Color.hexToRgb("#ffffff"));
+console.log(TwoD.Color.rgbToHex(255, 255, 255));
 
 /**
  * @description connector makes the logic for this effect. It has single purpose and that is loop throught all particles and check if the distance is smaller that 100

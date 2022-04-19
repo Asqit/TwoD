@@ -775,6 +775,38 @@ TwoD.Color.random = function () {
   return `rgb(${r},${g},${b}, 255)`;
 };
 
+/**
+ * @param {string} char
+ * @returns {string} hex
+ */
+const charToHex = (char) => char.toString(16);
+
+/**
+ * @static
+ * @param {number} r
+ * @param {number} g
+ * @param {number} b
+ */
+TwoD.Color.rgbToHex = function (r, g, b) {
+  return `#${charToHex(r)}${charToHex(g)}${charToHex(b)}`;
+};
+
+/**
+ * @static
+ * @param {string} hex 6 digit format only! (#FFFFFF works | #FFF doesnt)
+ * @returns {object | boolean} return false when fail and object when success
+ */
+TwoD.Color.hexToRgb = function (hex) {
+  let res = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return res
+    ? {
+        r: parseInt(res[1], 16),
+        g: parseInt(res[2], 16),
+        b: parseInt(res[3], 16),
+      }
+    : false;
+};
+
 //---------------------------------------------DOM--------------------------------------------//
 TwoD.DOM = {};
 
@@ -833,4 +865,59 @@ TwoD.DOM.show = (element, displayType) => {
 };
 
 Object.freeze(TwoD);
-export { TwoD };
+
+const Palette = {};
+
+Palette.wickeSkies = {
+  black: "#00000f",
+  veryDarkBlue: "#000133",
+  darkBlue: "#000356",
+  blue: "#0203e2",
+  skyBlue: "#00cdfe",
+  purple: "#680880",
+  pink: "#fe007d",
+  red: "#de1738",
+  redIsh: "#fd5e53",
+  orange: "#fc9c54",
+  yellow: "#ffe373",
+  lightYellow: "#fafbbd",
+};
+
+Palette.pico4 = {
+  veryDarkBlue: "#180c21",
+  gray: "#859999",
+  darkGray: "#3a4a54",
+  green: "#49ab3f",
+  yellow: "#fff4b0",
+  orange: "#ce6b40",
+  darkPurple: "#6f324e",
+  pink: "#e75e5e",
+};
+
+Palette.oneBit = {
+  gray: "#596e79",
+  white: "#e4e8d1",
+};
+
+Palette.greyMist = {
+  white: "#f1ffe0",
+  lightBrown: "#988171",
+  brown: "#463534",
+  black: "#1e1721",
+};
+
+Palette.kankei4 = {
+  white: "#ffffff",
+  red: "#f42e1f",
+  blue: "#2f256b",
+  black: "#060608",
+};
+
+Palette.deadIce = {
+  white: "#f5fffa",
+  lightBlue: "#5792a5",
+  gray: "#46393f",
+  darkBlue: "#161327",
+};
+
+export { TwoD, Palette };
