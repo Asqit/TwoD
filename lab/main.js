@@ -1,4 +1,4 @@
-import { TwoD } from "../TwoD.mjs";
+import TwoD from "../TwoD_new.mjs";
 
 const global = {};
 
