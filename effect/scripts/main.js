@@ -35,7 +35,7 @@ function connector() {
   for (let x = 0; x < LEN; x++) {
     for (let y = 0; y < LEN; y++) {
       let dist = TwoD.Math.vectorDistance(particles[x], particles[y]);
-      if (TwoD.Math.isBetween(dist, 0, 200)) {
+      if (dist < 200) {
         ctx.beginPath();
         ctx.moveTo(particles[x].x + 2.5, particles[x].y + 2.5);
         ctx.lineTo(particles[y].x + 2.5, particles[y].y + 2.5);

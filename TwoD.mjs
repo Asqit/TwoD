@@ -58,20 +58,9 @@ const TwoD = {};
  * @description Creates new instance of Frame.
  */
 TwoD.Frame = function (width, height, backgroundColor) {
-  switch (true) {
-    case is.number(width):
-      this._w = width;
-    case is.number(height):
-      this._h = height;
-    case is.string(backgroundColor) || is.object(backgroundColor):
-      this._bg = backgroundColor;
-      break;
-    default:
-      this._w = innerWidth;
-      this._h = innerHeight;
-      this._bg = "#000";
-      break;
-  }
+  this._w = (is.number(width) && width) || innerWidth;
+  this._h = (is.number(height) && height) || innerHeight;
+  this._bg = (is.string(backgroundColor) && backgroundColor) || "#000";
 
   this._id = Date.now();
 
@@ -101,6 +90,14 @@ TwoD.Frame.prototype.create = function (destination) {
   }
 
   return document.getElementById(String(this._id)) ? true : false;
+};
+
+/**
+ * @param {string} id
+ */
+TwoD.Frame.prototype.setId = function (id) {
+  this._id = id;
+  this._canvas.id = id;
 };
 
 /**
@@ -229,10 +226,10 @@ TwoD.Math.rand = function (min, max) {
     max = +max || 255;
     console.warn(
       "WARNING:Invalid type passed for random number generator\nTrying to parse numbers or default numbers(0-255) will be used." +
-        "parsedMin:" +
+        "resulting min:" +
         min +
         " " +
-        "parsedMax:" +
+        "resulting max:" +
         max
     );
     return min + Math.random() * (max - min);
@@ -276,7 +273,9 @@ TwoD.Math.randBool = function () {
 TwoD.Math.isBetween = function (n, min, max) {
   if (is.number(n) && is.number(min) && is.number(max))
     return n >= min && n <= max;
-  else console.error("ERROR:Invalid type passed");
+  else {
+    throw new Error("Invalid type passed");
+  }
 };
 
 /**
@@ -483,18 +482,8 @@ TwoD.Perf.drawFPS = function (ctx, x = 30, y = 30) {
  * @description Creates new instance of Vec2
  */
 TwoD.Vec2 = function (x, y) {
-  switch (true) {
-    case is.number(x):
-      this.x = x;
-    case is.number(y):
-      this.y = y;
-      break;
-    default:
-      this.x = 0;
-      this.y = 0;
-      console.warn("WARNING:Creating new vector with x:0, y:0");
-      break;
-  }
+  this.x = (is.number(x) && x) || 0;
+  this.y = (is.number(y) && y) || 0;
 };
 
 /**
@@ -515,24 +504,10 @@ TwoD.Vec2.prototype.distanceToVector = function (vector) {
  * @param {number} height
  */
 TwoD.Rect = function (x, y, width, height) {
-  switch (true) {
-    case is.number(x):
-      this.x = x;
-    case is.number(y):
-      this.y = y;
-    case is.number(width):
-      this.w = width;
-    case is.number(height):
-      this.h = height;
-      break;
-    default:
-      this.x = 0;
-      this.y = 0;
-      this.w = 100;
-      this.h = 100;
-      console.warn("WARNING:Creating a new rectangle with default params");
-      break;
-  }
+  this.x = (is.number(x) && x) || 0;
+  this.y = (is.number(y) && y) || 0;
+  this.w = (is.number(width) && width) || 100;
+  this.h = (is.number(height) && height) || 100;
 };
 
 /**
@@ -587,29 +562,11 @@ TwoD.Circle = function (position, radius) {
  * @param {number} angle
  */
 TwoD.OrientedRect = function (x, y, width, height, angle) {
-  switch (true) {
-    case is.number(x):
-      this.x = x;
-    case is.number(y):
-      this.y = y;
-    case is.number(width):
-      this.w = width;
-    case is.number(height):
-      this.h = height;
-    case is.number(angle):
-      this.angle = angle;
-      break;
-    default:
-      this.x = 0;
-      this.y = 0;
-      this.w = 100;
-      this.h = 100;
-      this.angle = 45;
-      console.warn(
-        "WARNING:Creating a new oriented rectangle with default params"
-      );
-      break;
-  }
+  this.x = (is.number(x) && x) || 0;
+  this.y = (is.number(y) && y) || 0;
+  this.w = (is.number(width) && width) || 100;
+  this.h = (is.number(height) && height) || 100;
+  this.angle = (is.number(angle) && angle) || 45;
 };
 
 //--------------------------------------------COLLISION---------------------------------------------//
@@ -744,18 +701,10 @@ TwoD.StateMachine.Machine = function () {
  * @returns {string} rgba color
  */
 TwoD.Color = function (red, green, blue, alpha) {
-  (this.r = 0), (this.g = 0), (this.b = 0), (this.a = 255);
-  if (
-    is.number(red) &&
-    is.number(green) &&
-    is.number(blue) &&
-    is.number(alpha)
-  ) {
-    this.r = red;
-    this.g = green;
-    this.b = blue;
-    this.a = alpha;
-  }
+  this.r = (is.number(red) && red) || 200;
+  this.g = (is.number(green) && green) || 200;
+  this.b = (is.number(blue) && blue) || 200;
+  this.a = (is.number(alpha) && alpha) || 200;
 
   this.getColor = function () {
     return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
