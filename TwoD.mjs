@@ -74,6 +74,8 @@ TwoD.Frame = function (width, height, backgroundColor) {
     <p>We are teribly sorry, but your browser is not capable of running HTML5.</p>
     <p>Please upgrade your browser <a href="https://www.mozilla.org/en-US/firefox/new/">here</a></p>
   `;
+
+  return this;
 };
 
 /**
@@ -639,7 +641,7 @@ TwoD.StateMachine.State = function (props) {
 };
 
 TwoD.StateMachine.List = function () {
-  let states = [];
+  this.states = [];
   this.pop = function () {
     return states.pop();
   };
@@ -647,46 +649,46 @@ TwoD.StateMachine.List = function () {
    * @param {TwoD.StateMachine.State} state
    */
   this.push = function (state) {
-    states.push(state);
+    this.states.push(state);
   };
   this.top = function () {
-    return states[states.length - 1];
+    return this.states[this.states.length - 1];
   };
 };
 
 TwoD.StateMachine.Machine = function () {
-  let sl = new TwoD.StateMachine.List();
+  this.sl = new TwoD.StateMachine.List();
 
   this.update = function () {
-    let top = sl.top();
-    top.update();
+    let top = this.sl.top();
+    top && top.update();
   };
 
   this.render = function () {
-    let top = sl.top();
-    top.render();
+    let top = this.sl.top();
+    top && top.render();
   };
 
   /**
    * @param {TwoD.StateMachine.State} state
    */
   this.push = function (state) {
-    sl.push(state);
+    this.sl.push(state);
     state.onEnter();
   };
 
   this.pop = function () {
-    sl.top().onExit();
-    sl.pop();
+    this.sl.top().onExit();
+    this.sl.pop();
   };
 
   this.resume = function () {
-    let top = sl.top();
+    let top = this.sl.top();
     top.onResume();
   };
 
   this.pause = function () {
-    let top = sl.top();
+    let top = this.sl.top();
     top.onPause();
   };
 };
