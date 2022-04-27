@@ -213,14 +213,14 @@ TwoD.Frame.prototype.setBackgroundColor = function (backgroundColor) {
 };
 
 //--------------------------------------------------MATH-----------------------------------------------//
-TwoD.Math = {};
+TwoD.Maths = {};
 
 /**
  * @param {number} min
  * @param {number} max
  * @returns {number} random number in range between parameters
  */
-TwoD.Math.rand = function (min, max) {
+TwoD.Maths.rand = function (min, max) {
   if (is.number(min) && is.number(max)) {
     return min + Math.random() * (max - min);
   } else {
@@ -243,7 +243,7 @@ TwoD.Math.rand = function (min, max) {
  * @param {number} max
  * @returns {number} random number in range between parameters
  */
-TwoD.Math.randInt = function (min, max) {
+TwoD.Maths.randInt = function (min, max) {
   return Math.floor(this.rand(min, max));
 };
 
@@ -251,7 +251,7 @@ TwoD.Math.randInt = function (min, max) {
  * @param {any[]} array
  * @description returns random element inside of array.
  */
-TwoD.Math.randElement = function (array) {
+TwoD.Maths.randElement = function (array) {
   if (is.array(array)) {
     return array[Math.round(this.rand(0, array.length - 1))];
   } else {
@@ -262,7 +262,7 @@ TwoD.Math.randElement = function (array) {
 /**
  * @returns {bool} random boolean
  */
-TwoD.Math.randBool = function () {
+TwoD.Maths.randBool = function () {
   return this.randElement([true, false]);
 };
 
@@ -272,7 +272,7 @@ TwoD.Math.randBool = function () {
  * @param {number} max
  * @returns {boolean} is number between limits ? true : false
  */
-TwoD.Math.isBetween = function (n, min, max) {
+TwoD.Maths.isBetween = function (n, min, max) {
   if (is.number(n) && is.number(min) && is.number(max))
     return n >= min && n <= max;
   else {
@@ -284,7 +284,7 @@ TwoD.Math.isBetween = function (n, min, max) {
  * @param {number} deg
  * @returns {number} degree converted to radian
  */
-TwoD.Math.degToRad = function (deg) {
+TwoD.Maths.degToRad = function (deg) {
   if (is.number(deg)) return (deg * Math.PI) / 180;
   else
     console.error(
@@ -299,7 +299,7 @@ TwoD.Math.degToRad = function (deg) {
  * @returns {number}
  * @description limits your value to be between specified `min`,`max`
  */
-TwoD.Math.limit = function (n, min, max) {
+TwoD.Maths.limit = function (n, min, max) {
   if (is.number(n) && is.number(min) && is.number(max))
     return Math.max(min, Math.min(max, n));
   else console.error("ERROR:Invalid type passed");
@@ -310,7 +310,7 @@ TwoD.Math.limit = function (n, min, max) {
  * @param {TwoD.Vec2} vectorB
  * @returns {TwoD.Vec2} sums up two vectors
  */
-TwoD.Math.addVector = function (vectorA, vectorB) {
+TwoD.Maths.addVector = function (vectorA, vectorB) {
   let res = new TwoD.Vec2(0, 0);
 
   res.x = vectorA.x + vectorB.x;
@@ -324,7 +324,7 @@ TwoD.Math.addVector = function (vectorA, vectorB) {
  * @param {TwoD.Vec2} vectorB
  * @returns {TwoD.Vec2} substracts two vectors
  */
-TwoD.Math.substrVector = function (vectorA, vectorB) {
+TwoD.Maths.substrVector = function (vectorA, vectorB) {
   let res = new TwoD.Vec2(0, 0);
 
   res.x = vectorA.x - vectorB.x;
@@ -337,7 +337,7 @@ TwoD.Math.substrVector = function (vectorA, vectorB) {
  * @param {TwoD.Vec2} vector
  * @returns {TwoD.Vec2}
  */
-TwoD.Math.negateVector = function (vector) {
+TwoD.Maths.negateVector = function (vector) {
   let res = new TwoD.Vec2(0, 0);
 
   res.x = -vector.x;
@@ -352,7 +352,7 @@ TwoD.Math.negateVector = function (vector) {
  * @param {number} scalar
  * @returns {TwoD.Vec2}
  */
-TwoD.Math.scaleVector = function (vector, scalar) {
+TwoD.Maths.scaleVector = function (vector, scalar) {
   let res = new TwoD.Vec2(0, 0);
 
   res.x = vector.x * scalar;
@@ -367,7 +367,7 @@ TwoD.Math.scaleVector = function (vector, scalar) {
  * @param {number} divisor
  * @returns {TwoD.Vec2}
  */
-TwoD.Math.divideVector = function (vector, divisor) {
+TwoD.Maths.divideVector = function (vector, divisor) {
   let res = new TwoD.Vec2(0, 0);
 
   res.x = vector.x / divisor;
@@ -380,7 +380,7 @@ TwoD.Math.divideVector = function (vector, divisor) {
  * @param {TwoD.Vec2} vector
  * @returns {number}
  */
-TwoD.Math.vectorLength = function (vector) {
+TwoD.Maths.vectorLength = function (vector) {
   return Math.sqrt(vector.x * vector.x + vector.y * vector.y);
 };
 
@@ -389,7 +389,7 @@ TwoD.Math.vectorLength = function (vector) {
  * @param {number} floatB
  * @returns {boolean}
  */
-TwoD.Math.areFloatsEqual = function (floatA, floatB) {
+TwoD.Maths.areFloatsEqual = function (floatA, floatB) {
   let threshold = 1.0 / 8192.0;
   return Math.abs(floatA - floatB) < threshold;
 };
@@ -398,7 +398,7 @@ TwoD.Math.areFloatsEqual = function (floatA, floatB) {
  * @param {object | TwoD.Vec2} vector
  * @return {TwoD.Vec2}
  */
-TwoD.Math.unitVector = function (vector) {
+TwoD.Maths.unitVector = function (vector) {
   let len = this.vectorLength(vector);
   if (0 < len) {
     return this.divideVector(vector, len);
@@ -413,14 +413,14 @@ TwoD.Math.unitVector = function (vector) {
  * @param {TwoD.vec2} vectorB
  * @returns {number} distance between two vectors
  */
-TwoD.Math.vectorDistance = function (vectorA, vectorB) {
+TwoD.Maths.vectorDistance = function (vectorA, vectorB) {
   let x = vectorA.x - vectorB.x;
   let y = vectorA.y - vectorB.y;
   return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 };
 
-TwoD.Math.NULL_VECTOR = { x: 0, y: 0 };
-Object.freeze(TwoD.Math.NULL_VECTOR);
+TwoD.Maths.NULL_VECTOR = { x: 0, y: 0 };
+Object.freeze(TwoD.Maths.NULL_VECTOR);
 
 //------------------------------------------------PERFORMANCE---------------------------------------------//
 TwoD.Perf = {};
@@ -582,9 +582,9 @@ TwoD.Collision = {};
  */
 TwoD.Collision.circles = function (circleA, circleB) {
   let radiusSum = circleA.radius + circleB.radius;
-  let distance = TwoD.Math.substrVector(circleA.position, circleB.position);
+  let distance = TwoD.Maths.substrVector(circleA.position, circleB.position);
 
-  return TwoD.Math.vectorLength(distance) <= radiusSum;
+  return TwoD.Maths.vectorLength(distance) <= radiusSum;
 };
 
 /**
@@ -608,8 +608,8 @@ TwoD.Collision.rects = function (rectA, rectB) {
  */
 TwoD.Collision.points = function (pointA, pointB) {
   return (
-    TwoD.Math.areFloatsEqual(pointA.x, pointB.x) &&
-    TwoD.Math.areFloatsEqual(pointA.y, pointB.y)
+    TwoD.Maths.areFloatsEqual(pointA.x, pointB.x) &&
+    TwoD.Maths.areFloatsEqual(pointA.y, pointB.y)
   );
 };
 
@@ -712,6 +712,14 @@ TwoD.Color = function (red, green, blue, alpha) {
     return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
   };
 
+  this.setColor = function (red, green, blue) {
+    this.r = (is.number(red) && red) || this.r;
+    this.g = (is.number(green) && green) || this.g;
+    this.b = (is.number(blue) && blue) || this.b;
+    this.a = (is.number(alpha) && alpha) || this.a;
+    return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
+  };
+
   return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
 };
 
@@ -720,9 +728,9 @@ TwoD.Color = function (red, green, blue, alpha) {
  * @returns {string | TwoD.Color} random color
  */
 TwoD.Color.random = function () {
-  let r = TwoD.Math.randInt(0, 255);
-  let g = TwoD.Math.randInt(0, 255);
-  let b = TwoD.Math.randInt(0, 255);
+  let r = TwoD.Maths.randInt(0, 255);
+  let g = TwoD.Maths.randInt(0, 255);
+  let b = TwoD.Maths.randInt(0, 255);
   return `rgb(${r},${g},${b}, 255)`;
 };
 
@@ -757,7 +765,39 @@ TwoD.Color.hexToRgb = function (hex) {
       }
     : false;
 };
+//---------------------------------------------VIEW--------------------------------------------//
+/**
+ * @description This class provides a very simple way for making game camera. It has no such features as culling, it just translates canvas
+ * @param {CanvasRenderingContext} ctx
+ * @param {object | TwoD.Rect} source
+ * @param {number} screenWidth
+ * @param {number} screenHeight
+ * @param {number=} scaleX
+ * @param {number=} scaleY
+ */
+TwoD.View = function (ctx, source, screenWidth, screenHeight, scaleX, scaleY) {
+  this.ctx = ctx;
+  if (!source.x || !source.y) {
+    throw new Error("Passed invalid source");
+  } else {
+    this.source = source;
+  }
+  this.screenWidth = screenWidth;
+  this.screenHeight = screenHeight;
+  this.scaleX = scaleX || 2;
+  this.scaleY = scaleY || 2;
 
+  this.before = function () {
+    this.ctx.save();
+    this.ctx.translate(
+      this.screenWidth / this.scaleX - this.source.x,
+      this.screenHeight / this.scaleY - this.source.y
+    );
+  };
+  this.after = function () {
+    this.ctx.restore();
+  };
+};
 //---------------------------------------------DOM--------------------------------------------//
 TwoD.DOM = {};
 
@@ -801,22 +841,14 @@ TwoD.DOM.hide = (element) => {
  * @param {string=} displayType
  * @returns {void} reveals element in body by setting display property
  */
-TwoD.DOM.show = (element, displayType) => {
-  switch (true) {
-    case !element:
-    case !is.object(element):
-    case !displayType:
-    case !is.string(displayType):
-      console.warn("WARNING:Could not show HTMLElement.");
-      break;
-    default:
-      element.style.display = displayType;
-      break;
-  }
+TwoD.DOM.show = (element, displayType = "block") => {
+  element.style.display = displayType;
 };
 
 Object.freeze(TwoD);
-
+//---------------------------------------------PALETTE--------------------------------------------//
+//  All color palettes where taken from: https://lospec.com/palette-list
+//  all credits to these authors <3
 const Palette = {};
 
 Palette.wickeSkies = {
@@ -871,4 +903,21 @@ Palette.deadIce = {
   darkBlue: "#161327",
 };
 
-export { TwoD, Palette };
+export default TwoD;
+export { Palette };
+export const {
+  Frame,
+  Maths,
+  Perf,
+  Vec2,
+  Rect,
+  Line,
+  LineSegment,
+  Circle,
+  OrientedRect,
+  Collision,
+  StateMachine,
+  Color,
+  View,
+  DOM,
+} = TwoD;
