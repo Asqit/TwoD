@@ -1,0 +1,59 @@
+//======================================
+//  TwoD.js - palettes
+//  Ondřej Tuček               27.4.2022
+//  All color palettes where taken from:
+//  https://lospec.com/palette-list
+//======================================
+@use "sass:map";
+
+$wickedSkies: (
+  "black": #00000f,
+  "veryDarkBlue": #000133,
+  "darkBlue": #000356,
+  "blue": #0203e2,
+  "skyBlue": #00cdfe,
+  "purple": #680880,
+  "pink": #fe007d,
+  "red": #de1738,
+  "redIsh": #fd5e53,
+  "orange": #fc9c54,
+  "yellow": #ffe373,
+  "lightYellow": #fafbbd,
+);
+
+$pico4: (
+  "veryDarkBlue": #180c21,
+  "gray": #859999,
+  "darkGray": #3a4a54,
+  "green": #49ab3f,
+  "yellow": #fff4b0,
+  "orange": #ce6b40,
+  "darkPurple": #6f324e,
+  "pink": #e75e5e,
+);
+
+$oneBit: (
+  "gray": #596e79,
+  "white": #e4e8d1,
+);
+
+$greyMist: (
+  "white": #f1ffe0,
+  "lightBrown": #988171,
+  "brown": #463534,
+  "black": #1e1721,
+);
+
+$kankei4: (
+  "white": #ffffff,
+  "red": #f42e1f,
+  "blue": #2f256b,
+  "black": #060608,
+);
+
+$deadIce: (
+  "white": #f5fffa,
+  "lightBlue": #5792a5,
+  "gray": #46393f,
+  "darkBlue": #161327,
+);
