@@ -56,6 +56,7 @@ const TwoD = {};
  * @param {number=} height
  * @param {string | TwoD.Color=} backgroundColor
  * @description Creates new instance of Frame.
+ * @returns {this} youll get reference to the instance, meaning you can chain your code: `new Frame(128,128, "#000").create();`
  */
 TwoD.Frame = function (width, height, backgroundColor) {
   this._w = (is.number(width) && width) || innerWidth;
@@ -624,72 +625,82 @@ TwoD.Collision.vectors = function (vec2a, vec2b) {
   return xs && xy;
 };
 
-//---------------------------------------------StateMachine--------------------------------------------//
-TwoD.StateMachine = {};
+//---------------------------------------------State--------------------------------------------//
+TwoD.Dock = {};
+
+TwoD.Dock._List = function () {
+  this._list = new Array();
+
+  this.push = function (container) {
+    this._list.push(container);
+  };
+
+  this.pop = function () {
+    return this._list.pop();
+  };
+
+  this.top = function () {
+    return this._list[this._list.length - 1];
+  };
+};
 
 /**
- * @param {any} props - props can be anything. Can be reused latter in the code
+ * @description Container is a State of your application.
+ * @param {any} props can be anything you might need
  */
-TwoD.StateMachine.State = function (props) {
-  this.props = props;
+TwoD.Dock.Container = function (props) {
+  this.props = props || undefined;
+  this.isPause = false;
+
   this.onEnter = function () {};
   this.update = function () {};
   this.render = function () {};
-  this.onExit = function () {};
   this.onPause = function () {};
   this.onResume = function () {};
+  this.onExit = function () {};
 };
 
-TwoD.StateMachine.List = function () {
-  this.states = [];
-  this.pop = function () {
-    return states.pop();
-  };
-  /**
-   * @param {TwoD.StateMachine.State} state
-   */
-  this.push = function (state) {
-    this.states.push(state);
-  };
-  this.top = function () {
-    return this.states[this.states.length - 1];
-  };
-};
-
-TwoD.StateMachine.Machine = function () {
-  this.sl = new TwoD.StateMachine.List();
-
-  this.update = function () {
-    let top = this.sl.top();
-    top && top.update();
-  };
-
-  this.render = function () {
-    let top = this.sl.top();
-    top && top.render();
-  };
+TwoD.Dock.Crane = function () {
+  this._states = new TwoD.Dock._List();
 
   /**
-   * @param {TwoD.StateMachine.State} state
+   * @param {TwoD.Dock.Container | object} state
    */
   this.push = function (state) {
-    this.sl.push(state);
-    state.onEnter();
+    this._states.push(state);
   };
 
   this.pop = function () {
-    this.sl.top().onExit();
-    this.sl.pop();
+    return this._states.pop();
   };
 
-  this.resume = function () {
-    let top = this.sl.top();
-    top.onResume();
+  this.run = function () {
+    let top = this._states.top();
+    if (!top.isPause) {
+      top.update();
+    }
+    top.render();
   };
 
   this.pause = function () {
-    let top = this.sl.top();
+    let top = this._states.top();
+
+    top.isPause = !top.isPause;
     top.onPause();
+  };
+
+  this.resume = function () {
+    let top = this._states.top();
+
+    top.isPause = !top.isPause;
+    top.onResume();
+  };
+
+  /**
+   * @returns {this} return reference to itself
+   */
+  getRef = function () {
+    return this;
   };
 };
 
@@ -916,7 +927,8 @@ export const {
   Circle,
   OrientedRect,
   Collision,
-  StateMachine,
+  Crane,
+  Container,
   Color,
   View,
   DOM,

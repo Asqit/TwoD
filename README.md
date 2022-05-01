@@ -14,7 +14,7 @@ namespace is `TwoD`. So when you need to use some part of the lib, you simply ca
 - `Perf` - Object for calculating FPS and delta time
 - `Shapes` (Vec2, Circle, Rect, Line...)
 - `Collision` (measures collision between shapes)
-- `StateMachine` - Object with State, List and Machine (basic state handling)
+- `Dock` - Object with `Container, Crane, _List`. (basic state management)
 - `Color` - simple function which contructs new RGBA color in String
 - `View` - very simple camera implementation. No super features like culling
 - `DOM` - Object with function that ease up your work
