@@ -695,13 +695,6 @@ TwoD.Dock.Crane = function () {
     top.isPause = !top.isPause;
     top.onResume();
   };
-
-  /**
-   * @returns {this} return reference to itself
-   */
-  getRef = function () {
-    return this;
-  };
 };
 
 //---------------------------------------------Color--------------------------------------------//
