@@ -348,7 +348,6 @@ TwoD.Maths.negateVector = function (vector) {
 };
 
 /**
- *
  * @param {TwoD.Vec2} vector
  * @param {number} scalar
  * @returns {TwoD.Vec2}
@@ -409,7 +408,6 @@ TwoD.Maths.unitVector = function (vector) {
 };
 
 /**
- *
  * @param {TwoD.vec2} vectorA
  * @param {TwoD.vec2} vectorB
  * @returns {number} distance between two vectors
@@ -667,11 +665,13 @@ TwoD.Dock.Crane = function () {
    * @param {TwoD.Dock.Container | object} state
    */
   this.push = function (state) {
+    state.onEnter();
     this._states.push(state);
   };
 
   this.pop = function () {
-    return this._states.pop();
+    this._states.top().onExit();
+    this._states.pop();
   };
 
   this.run = function () {
@@ -729,18 +729,18 @@ TwoD.Color = function (red, green, blue, alpha) {
 
 /**
  * @static
- * @returns {string | TwoD.Color} random color
+ * @returns {string} random color with full opacity
  */
 TwoD.Color.random = function () {
   let r = TwoD.Maths.randInt(0, 255);
   let g = TwoD.Maths.randInt(0, 255);
   let b = TwoD.Maths.randInt(0, 255);
-  return `rgb(${r},${g},${b}, 255)`;
+  return `rgb(${r},${g},${b}, 1)`;
 };
 
 /**
  * @param {string} char
- * @returns {string} hex
+ * @returns {string} Character converted to HEX
  */
 const charToHex = (char) => char.toString(16);
 
@@ -749,6 +749,7 @@ const charToHex = (char) => char.toString(16);
  * @param {number} r
  * @param {number} g
  * @param {number} b
+ * @returns {string} color in HEX format
  */
 TwoD.Color.rgbToHex = function (r, g, b) {
   return `#${charToHex(r)}${charToHex(g)}${charToHex(b)}`;
@@ -920,8 +921,7 @@ export const {
   Circle,
   OrientedRect,
   Collision,
-  Crane,
-  Container,
+  Dock,
   Color,
   View,
   DOM,
