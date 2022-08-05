@@ -858,6 +858,49 @@ TwoD.DOM.hide = (element) => {
 TwoD.DOM.show = (element, displayType = 'block') => {
 	element.style.display = displayType;
 };
+//---------------------------------------------INPUT--------------------------------------------//
+TwoD.Input = {
+	_key: {},
+};
+
+/**
+ * @param {string} key is simply a key like: `W`, `S`, `ESCAPE`...
+ * @returns {boolean}
+ */
+TwoD.Input.isDown = function (key) {
+	return this._key[key];
+};
+
+/**
+ * @param {Event} event
+ * @param {boolean} state
+ */
+TwoD.Input.setKey = function (event, state) {
+	const ASCII = event.keyCode;
+	let key = undefined;
+
+	switch (ASCII) {
+		case 27:
+			key = 'ESC';
+			break;
+		case 32:
+			key = 'SPACE';
+			break;
+		case 13:
+			key = 'ENTER';
+			break;
+		default:
+			key = String.fromCharCode(ASCII);
+			break;
+	}
+
+	this._key[key] = state;
+};
+
+function initInput() {
+	document.addEventListener('keydown', (e) => TwoD.Input.setKey(e, true));
+	document.addEventListener('keyup', (e) => TwoD.Input.setKey(e, false));
+}
 
 Object.freeze(TwoD);
 //---------------------------------------------PALETTE--------------------------------------------//
@@ -918,7 +961,9 @@ Palette.deadIce = {
 };
 
 export default TwoD;
-export { Palette };
+
+export { Palette, initInput };
+
 export const {
 	Frame,
 	Maths,
@@ -934,4 +979,5 @@ export const {
 	Color,
 	View,
 	DOM,
+	Input,
 } = TwoD;
